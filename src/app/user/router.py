@@ -1,16 +1,19 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import select, insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from db.base import get_async_session
-from src.app.schemas import ApiSettings
+from src.app.db.base import get_async_session
+from src.app.user.schemas import ApiSettings
 from src.openai_client.schemas import ModelSettings
 
-router = APIRouter()
+
+router = APIRouter(
+    prefix="/user",
+    tags=["User"],
+)
 
 
 @router.post("/set_api_settings")
-async def set_api_key(api_settings: ApiSettings, session: AsyncSession = Depends(get_async_session)):
+async def set_api_settings(api_settings: ApiSettings, session: AsyncSession = Depends(get_async_session)):
     try:
         stmt = None  # insert(ApiSettings).values(**api_settings.model_dump())
         await session.execute(stmt)

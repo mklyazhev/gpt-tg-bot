@@ -17,10 +17,10 @@ class Settings(BaseSettings):
 
     logfile: Path
 
-    # использовать этот вариант, когда все будет готово
-    # config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+    # использовать этот вариант, когда все будет готово (и для alembic)
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
     # использовать этот вариант, когда надо протестировать файл из src.openai_client.examples
-    model_config = SettingsConfigDict(env_file=r".env", env_file_encoding="utf-8")#../../../
+    # model_config = SettingsConfigDict(env_file=r"../../../.env", env_file_encoding="utf-8")
 
     @property
     def async_db_url(self):
