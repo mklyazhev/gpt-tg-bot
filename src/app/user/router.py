@@ -1,7 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.app.db.base import get_async_session
+from src.app.db.models import Chat
 from src.app.user.schemas import ApiSettings
 from src.openai_client.schemas import ModelSettings
 
@@ -53,9 +55,9 @@ async def create_chat(model_settings: ModelSettings, session: AsyncSession = Dep
 
 
 @router.get("/get_chats")
-async def get_chats(user_id: str, session: AsyncSession = Depends(get_async_session)):
+async def get_chats(user_id: int, session: AsyncSession = Depends(get_async_session)):
     try:
-        query = None  # select(Chat).where(Chat.user_id == user_id)
+        query = select(Chat).where(Chat.user_id == user_id)
         result = await session.execute(query)
         return {
             "status": "success",
@@ -70,8 +72,8 @@ async def get_chats(user_id: str, session: AsyncSession = Depends(get_async_sess
         })
 
 
-@router.get("/get_balance")
-async def get_balance(user_id: str, session: AsyncSession = Depends(get_async_session)):
+@router.get("/get_token_usage")
+async def get_token_usage(user_id: int, chat_id: int = None, session: AsyncSession = Depends(get_async_session)):
     try:
         query = None
         result = await session.execute(query)
