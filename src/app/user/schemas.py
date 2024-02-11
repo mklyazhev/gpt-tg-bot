@@ -14,4 +14,5 @@ class User(BaseModel):
 
 
 class ApiSettings(BaseModel):
+    # Вроде как больше не нужно, но разобраться перед тем как удалять
     pass

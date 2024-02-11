@@ -15,7 +15,7 @@ class User(Base):
 
     user_id = Column(BigInteger, primary_key=True, unique=True)
     username = Column(String(255), nullable=False)
-    openai_token = Column(String(255), nullable=False)
+    openai_token = Column(String(255), nullable=True)
     is_admin = Column(Boolean, default=False)
     is_blocked = Column(Boolean, default=False)
     date_create = Column(DateTime, default=func.now(), nullable=False)
@@ -28,6 +28,7 @@ class Chat(Base):
         {"schema": "gpt"}
     )
 
+    # Нужно добавить поля из схемы ModelSettings, т.к. тут не хватает
     chat_id = Column(Integer, autoincrement=True)
     user_id = Column(BigInteger, ForeignKey("gpt.user.user_id"), nullable=False)
     summary = Column(String(512))

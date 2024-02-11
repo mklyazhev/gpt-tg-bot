@@ -5,6 +5,7 @@ from src.app.admin.router import router as admin_router
 
 # логи должны быть вместе с config.py и main.py в папке src
 # запускать из папки gpt-tg-bot: uvicorn src.main:app --host 127.0.0.1 --port 8080 --reload --workers 2
+# alembic каждый раз делает миграции с нуля из-за того что не в стандартной схеме, хотя я исправлял
 app = FastAPI()
 app.include_router(user_router)
 app.include_router(admin_router)
