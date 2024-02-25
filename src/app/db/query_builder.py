@@ -1,4 +1,4 @@
-from sqlalchemy import select, insert, and_, or_
+from sqlalchemy import select, insert, update, and_, or_
 from sqlalchemy.orm import aliased
 
 from src.app.db import Base
@@ -22,6 +22,19 @@ def build_insert(table_name, values_):
     table = get_table(table_name)
 
     return insert(table).values(values_)
+
+
+def build_update(table_name, values_, conditions=None, any_condition=False):
+    table = get_table(table_name)
+    conditions_prepared = None if not conditions else get_prepared_conditions(table, conditions)
+
+    if conditions_prepared:
+        if not any_condition:
+            return update(table).values(values_).where(and_(*conditions_prepared))
+        else:
+            return update(table).values(values_).where(or_(*conditions_prepared))
+    else:
+        return update(table).values(values_)
 
 
 def get_table(table_name, alias=False):

@@ -13,6 +13,15 @@ class User(BaseModel):
     date_create: datetime
 
 
-class ApiSettings(BaseModel):
+class Chat(BaseModel):
+    chat_id: int
+    user_id: int
+    summary: str
+    context: str
+    token_usage: int
+    date_create: datetime
+
+
+class OpenaiSettings(BaseModel):
     # Вроде как больше не нужно, но разобраться перед тем как удалять
     pass

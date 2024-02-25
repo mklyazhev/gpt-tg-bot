@@ -32,6 +32,6 @@ class Chat(Base):
     chat_id = Column(Integer, autoincrement=True)
     user_id = Column(BigInteger, ForeignKey("gpt.user.user_id"), nullable=False)
     summary = Column(String(512))
-    context_json = Column(JSON, nullable=False)
-    date_create = Column(DateTime, default=func.now(), nullable=False)
+    context = Column(JSON, nullable=False)
     token_usage = Column(Float(5).with_variant(postgresql.FLOAT, "postgresql"), nullable=False)
+    date_create = Column(DateTime, default=func.now(), nullable=False)
